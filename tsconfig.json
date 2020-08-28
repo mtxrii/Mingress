@@ -24,6 +24,10 @@
       "dom",
       "dom.iterable",
       "scripthost"
+    ],
+    "typeRoots": [
+        "typings",
+        "node_modules/@types"
     ]
   },
   "include": [
@@ -31,7 +35,8 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "typings/vue-material/index.d.ts"
   ],
   "exclude": [
     "node_modules"
