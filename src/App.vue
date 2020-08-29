@@ -2,14 +2,17 @@
   <div id="app">
 
     <div class="header">
-      <h2>Mingress</h2>
+      <img alt="Vue logo" src="./assets/logo.png" width="14%">
     </div>
 
     <div class="sidenav">
-      <div style="padding-top: 80px"> </div>
-      <md-button class="md-primary">Main Dash</md-button>
-      <md-button class="md-primary">All Products</md-button>
-      <md-button class="md-primary">Search</md-button>
+      <div style="padding-top: 60px"> </div>
+      <md-button id="nav-button" class="md-primary">
+        Main Dash
+        <span style="color: black">..</span>
+      </md-button>
+      <md-button id="nav-button" class="md-primary">All Products</md-button>
+      <md-button id="nav-button" class="md-primary">Search</md-button>
     </div>
 
     <div class="content">
@@ -66,6 +69,12 @@ export default Vue.extend({
 .content {
   margin-left: 160px;
   padding: 25px 10px;
+}
+
+#nav-button {
+  display: block;
+  width: 100%;
+  margin-bottom: -5px;
 }
 
 </style>
