@@ -45,7 +45,10 @@ export default Vue.extend({
 
 .header {
   padding: 10px 20px;
-  background: #555;
+  background: #0f0c29;
+  background: -webkit-linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  border-bottom: solid rgba(15, 12, 41, 50%) 4px;
   color: #f1f1f1;
   position: fixed;
   text-align: left;
