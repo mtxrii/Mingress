@@ -16,19 +16,19 @@
     </div>
 
     <div class="content">
-      <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+      <Table/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import Table from './components/Table.vue';
 
 export default Vue.extend({
   name: 'App',
   components: {
-    HelloWorld
+    Table
   }
 });
 </script>
@@ -48,7 +48,7 @@ export default Vue.extend({
   background: #0f0c29;
   background: -webkit-linear-gradient(to right, #0f0c29, #302b63, #24243e);
   background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
-  border-bottom: solid rgba(15, 12, 41, 50%) 4px;
+  border-bottom: solid rgba(15, 12, 41, 50%) 5px;
   color: #f1f1f1;
   position: fixed;
   text-align: left;
