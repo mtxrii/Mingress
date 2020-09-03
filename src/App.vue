@@ -12,11 +12,11 @@
         <span style="color: black">..</span>
       </md-button>
       <md-button id="nav-button" class="md-primary">All Products</md-button>
-      <md-button id="nav-button" class="md-primary" @click="addProduct">Search</md-button>
+      <md-button id="nav-button" class="md-primary">Search</md-button>
     </div>
 
     <div class="content">
-      <Table v-bind:content="products"/>
+      <Table v-bind:content="products" v-bind:addButton="addProduct"/>
     </div>
   </div>
 </template>

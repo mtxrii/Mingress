@@ -3,6 +3,9 @@
     <md-table v-model="content" md-sort="id" md-sort-order="asc" md-card>
       <md-table-toolbar>
         <h1 class="md-title">All Products</h1>
+        <md-button class="md-icon-button md-raised" @click="addButton">
+          <md-icon>add</md-icon>
+        </md-button>
       </md-table-toolbar>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }">
@@ -21,7 +24,8 @@ export default Vue.extend({
   name: 'Table',
 
   props: {
-    content: Array
+    content: Array,
+    addButton: Function
   },
 
 
