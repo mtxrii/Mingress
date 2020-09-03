@@ -1,23 +1,30 @@
 <template>
-  <div id="app">
+  <div id="app" class="page-container">
 
-    <div class="header">
-      <img alt="Vue logo" src="./assets/logo.png" width="14%">
-    </div>
+    <md-app md-waterfall md-mode="fixed">
+      <md-app-toolbar class="md-primary">
+        <img alt="Vue logo" src="./assets/logo.png" width="14%">
+      </md-app-toolbar>
 
-    <div class="sidenav">
-      <div style="padding-top: 60px"> </div>
-      <md-button id="nav-button" class="md-primary">
-        Main Dash
-        <span style="color: black">..</span>
-      </md-button>
-      <md-button id="nav-button" class="md-primary">All Products</md-button>
-      <md-button id="nav-button" class="md-primary">Search</md-button>
-    </div>
+      <md-app-drawer md-permanent="full">
+        <md-toolbar class="md-transparent" md-elevation="0">
+          <h1 class="md-title">Views</h1>
+        </md-toolbar>
 
-    <div class="content">
-      <Table v-bind:content="products" v-bind:addButton="addProduct" v-bind:deleteButton="deleteProduct" v-bind:editButton="editProduct"/>
-    </div>
+        <md-list>
+          <md-button :md-ripple="false"><md-icon>home</md-icon>Main Dash</md-button>
+          <md-button :md-ripple="false"><md-icon>view_list</md-icon>All Products</md-button>
+          <md-button :md-ripple="false"><md-icon>search</md-icon>Search</md-button>
+        </md-list>
+      </md-app-drawer>
+
+      <md-app-content>
+        <Table v-bind:content="products" 
+          v-bind:addButton="addProduct" 
+          v-bind:deleteButton="deleteProduct" 
+          v-bind:editButton="editProduct"/>
+      </md-app-content>
+    </md-app>
   </div>
 </template>
 
@@ -67,50 +74,24 @@ export default Vue.extend({
 });
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss" scoped>
+.md-app {
+  height: 100vh;
+  border: 0px solid rgba(#000, .12);
 }
 
-.header {
-  padding: 10px 20px;
-  background: #0f0c29;
-  background: -webkit-linear-gradient(to right, #0f0c29, #302b63, #24243e);
-  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
-  border-bottom: solid rgba(15, 12, 41, 50%) 5px;
-  color: #f1f1f1;
-  position: fixed;
-  text-align: left;
-  top: 0;
-  z-index: 2;
-  width: 100%;
+.md-drawer {
+  width: 230px;
+  max-width: calc(100vw - 125px);
 }
 
-.sidenav {
-  height: 100%;
-  width: 160px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 20px;
+.md-icon {
+  margin-right: 10px;
 }
 
-.content {
-  margin-left: 160px;
-  padding: 25px 10px;
+img {
+  width: 180px;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
 }
-
-#nav-button {
-  display: block;
-  width: 100%;
-  margin-bottom: -5px;
-}
-
 </style>
