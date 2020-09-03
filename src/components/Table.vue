@@ -1,6 +1,6 @@
 <template>
   <div>
-    <md-table v-model="products" md-sort="id" md-sort-order="desc" md-card>
+    <md-table v-model="content" md-sort="id" md-sort-order="asc" md-card>
       <md-table-toolbar>
         <h1 class="md-title">All Products</h1>
       </md-table-toolbar>
@@ -19,14 +19,9 @@ import Vue from 'vue';
 
 export default Vue.extend({
   name: 'Table',
-  data: function() {
-    return {
-      products: [
-        {id: 1, name: "thing1", price: 10},
-        {id: 2, name: "object2", price: 50},
-        {id: 3, name: "item3", price: 20},
-      ]
-    }
+
+  props: {
+    content: Array
   },
 
 

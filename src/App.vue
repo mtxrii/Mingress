@@ -12,11 +12,11 @@
         <span style="color: black">..</span>
       </md-button>
       <md-button id="nav-button" class="md-primary">All Products</md-button>
-      <md-button id="nav-button" class="md-primary">Search</md-button>
+      <md-button id="nav-button" class="md-primary" @click="addProduct">Search</md-button>
     </div>
 
     <div class="content">
-      <Table/>
+      <Table v-bind:content="products"/>
     </div>
   </div>
 </template>
@@ -27,9 +27,31 @@ import Table from './components/Table.vue';
 
 export default Vue.extend({
   name: 'App',
+
   components: {
     Table
+  },
+
+  data: function() {
+    return {
+      products: [
+        {id: 1, name: "thing1", price: 10},
+        {id: 2, name: "object2", price: 50},
+        {id: 3, name: "item3", price: 20},
+      ]
+    }
+  },
+
+  methods: {
+    addProduct() {
+      this.products.push({
+        id: 4,
+        name: "product4",
+        price: 100
+      });
+    }
   }
+
 });
 </script>
 
