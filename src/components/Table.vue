@@ -22,9 +22,9 @@ export default Vue.extend({
   data: function() {
     return {
       products: [
-        {id: 0, name: "thing1", price: 10},
-        {id: 1, name: "object2", price: 50},
-        {id: 2, name: "item3", price: 20},
+        {id: 1, name: "thing1", price: 10},
+        {id: 2, name: "object2", price: 50},
+        {id: 3, name: "item3", price: 20},
       ]
     }
   },
