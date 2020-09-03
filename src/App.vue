@@ -19,12 +19,35 @@
       </md-app-drawer>
 
       <md-app-content>
-        <Table v-bind:content="products" 
-          v-bind:addButton="addProduct" 
+        <Table v-bind:content="products"
           v-bind:deleteButton="deleteProduct" 
           v-bind:editButton="editProduct"/>
       </md-app-content>
     </md-app>
+
+    <modal name="add-product">
+      <div style="padding: 40px">
+        <div class="md-title">Add Product</div>
+        <md-field>
+          <md-icon>label</md-icon>
+          <label>Name</label>
+          <md-input v-model="newProductName"></md-input>
+        </md-field>
+        <md-field>
+          <md-icon>local_atm</md-icon>
+          <label>Price</label>
+          <md-input v-model="newProductPrice"></md-input>
+        </md-field>
+        <md-button @click="proceedWithAdd" class="md-primary">Save</md-button>
+        <md-button @click="cancelAdd">Cancel</md-button>
+      </div>
+    </modal>
+
+    <md-snackbar md-position="center" md-duration="2000" :md-active.sync="showSnackbar1" md-persistent>
+      <span>Product price must be a number.</span>
+      <md-button class="md-accent" @click="showSnackbar1 = false">OK</md-button>
+    </md-snackbar>
+
   </div>
 </template>
 
@@ -45,29 +68,55 @@ export default Vue.extend({
         {id: 1, name: "thing1", price: 10},
         {id: 2, name: "object2", price: 50},
         {id: 3, name: "item3", price: 20},
-      ]
+      ],
+
+      newProductName: '',
+      newProductPrice: '',
+
+      showSnackbar1: false
     }
   },
 
   methods: {
-    addProduct() {
+    addProduct(newName: string, newPrice: number) {
+      const newID = this.products.length + 1;
       this.products.push({
-        id: 4,
-        name: "product4",
-        price: 100
+        id: newID,
+        name: newName,
+        price: newPrice
       });
     },
 
-    deleteProduct(id: number) {
-      for (let i = 0; i < this.products.length; i++) {
-        if (this.products[i].id === id) {
-          this.products.splice(i, 1);
-        }
+    cancelAdd() {
+      this.newProductName = '';
+      this.newProductPrice = '';
+      this.$modal.hide('add-product');
+      this.showSnackbar1 = false;
+    },
+
+    proceedWithAdd() {
+      if (isNaN(+this.newProductPrice)) {
+        this.showSnackbar1 = true;
       }
+      else {
+        this.addProduct(this.newProductName, parseInt(this.newProductPrice));
+        this.cancelAdd();
+      }
+    },
+
+    deleteProduct(id: number) {
+      this.products.splice(id-1, 1);
+      this.reIndex();
     },
 
     editProduct(id: number) {
       // for ()
+    },
+
+    reIndex() {
+      for (let i = 1; i <= this.products.length; i++) {
+        this.products[i-1].id = i;
+      }
     }
   }
 

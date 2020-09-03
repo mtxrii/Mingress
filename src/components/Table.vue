@@ -3,7 +3,7 @@
     <md-table v-model="content" md-sort="id" md-sort-order="asc" md-card>
       <md-table-toolbar>
         <h1 class="md-title">Products</h1>
-        <md-button class="md-icon-button md-primary md-raised" @click="addButton">
+        <md-button class="md-icon-button md-primary md-raised" @click="$modal.show('add-product')">
           <md-icon>add</md-icon>
         </md-button>
       </md-table-toolbar>
@@ -34,7 +34,6 @@ export default Vue.extend({
   props: {
     content: Array,
     
-    addButton: Function,
     deleteButton: Function,
     editButton: Function
   },
