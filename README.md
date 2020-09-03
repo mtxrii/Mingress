@@ -11,6 +11,14 @@ This repository only contains the frontend, but the full application also stores
 ## Modifying
 This app is written in VueJS, and designed to easily be used as a template for larger apps.
 
+#### API Key
+The backend ([Ingress](https://github.com/mtxrii/Ingress)) requires that api calls be followed by a secret key configured by its settings. If you're setting up Ingress yourself as well, this key was created by you. Create a new file inside ./src/ named `keys.ts` and fill it in like such:
+```
+export const keys = {
+    backend: 'PASTE KEY HERE'
+}
+```
+
 #### Project setup
 ```
 npm install
