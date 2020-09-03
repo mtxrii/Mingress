@@ -16,7 +16,7 @@
     </div>
 
     <div class="content">
-      <Table v-bind:content="products" v-bind:addButton="addProduct"/>
+      <Table v-bind:content="products" v-bind:addButton="addProduct" v-bind:deleteButton="deleteProduct" v-bind:editButton="editProduct"/>
     </div>
   </div>
 </template>
@@ -49,6 +49,18 @@ export default Vue.extend({
         name: "product4",
         price: 100
       });
+    },
+
+    deleteProduct(id: number) {
+      for (let i = 0; i < this.products.length; i++) {
+        if (this.products[i].id === id) {
+          this.products.splice(i, 1);
+        }
+      }
+    },
+
+    editProduct(id: number) {
+      // for ()
     }
   }
 
