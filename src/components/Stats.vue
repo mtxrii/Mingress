@@ -32,15 +32,51 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
 
 export default Vue.extend({
-  name: 'Stats',
+    name: 'Stats',
 
-  props: {
-    content: Array
-  },
+    props: {
+        content: Array
+    },
+
+    data: function() {
+        return {
+            totalProducts: 0,
+            avgProductPrice: 0,
+            totalProductsValue: 0,
+            avgNameLength: 0
+        }
+    },
+
+    mounted() {
+        this.loadStats();
+        this.loadPrices();
+    },
+
+    methods: {
+        loadStats() {
+            const ammount = this.content.length;
+
+            let totalPrice = 0;
+            let totalNameLength = 0;
+            this.content.forEach(product => {
+                totalPrice += product.price;
+                totalNameLength += product.name.length
+            });
+
+            this.totalProducts = ammount;
+            this.avgProductPrice = totalPrice / ammount;
+            this.totalProductsValue = totalPrice;
+            this.avgNameLength = totalNameLength / ammount;
+        },
+
+        loadPrices() {
+            
+        }
+    }
 
 });
 </script>
