@@ -22,6 +22,8 @@
         <Table v-bind:content="products"
           v-bind:deleteButton="deleteProduct" 
           v-bind:editButton="openEditModal"/>
+        <br>
+        <Stats v-bind:content="products"/>
       </md-app-content>
     </md-app>
 
@@ -72,12 +74,14 @@
 <script lang="ts">
 import Vue from 'vue';
 import Table from './components/Table.vue';
+import Stats from './components/Stats.vue';
 
 export default Vue.extend({
   name: 'App',
 
   components: {
-    Table
+    Table,
+    Stats
   },
 
   data: function() {
@@ -146,7 +150,7 @@ export default Vue.extend({
       this.showSnackbar = false;
     },
 
-    proceedWithEdit(id: number) {
+    proceedWithEdit() {
       if (isNaN(+this.editProductPrice)) {
         this.showSnackbar = true;
       }
