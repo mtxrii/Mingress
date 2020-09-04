@@ -16,7 +16,7 @@
           <md-button class="md-icon-button md-accent md-raised" @click="deleteButton(item.id)">
             <md-icon>delete</md-icon>
           </md-button>
-          <md-button class="md-icon-button md-primary md-raised" @click="$modal.show('')">
+          <md-button class="md-icon-button md-primary md-raised" @click="editButton(item.id)">
             <md-icon>create</md-icon>
           </md-button>
         </md-table-cell>

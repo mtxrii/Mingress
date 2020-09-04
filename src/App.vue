@@ -21,7 +21,7 @@
       <md-app-content>
         <Table v-bind:content="products"
           v-bind:deleteButton="deleteProduct" 
-          v-bind:editButton="editProduct"/>
+          v-bind:editButton="openEditModal"/>
       </md-app-content>
     </md-app>
 
@@ -43,25 +43,25 @@
       </div>
     </modal>
 
-    <modal name="add-product">
+    <modal name="edit-product">
       <div style="padding: 40px">
-        <div class="md-title">Add Product</div>
+        <div class="md-title">Edit Product #{{editProductID}}</div>
         <md-field>
           <md-icon>label</md-icon>
           <label>Name</label>
-          <md-input v-model="newProductName"></md-input>
+          <md-input v-model="editProductName"></md-input>
         </md-field>
         <md-field>
           <md-icon>local_atm</md-icon>
           <label>Price</label>
-          <md-input v-model="newProductPrice"></md-input>
+          <md-input v-model="editProductPrice"></md-input>
         </md-field>
-        <md-button @click="proceedWithAdd" class="md-primary">Save</md-button>
-        <md-button @click="resetAdd">Cancel</md-button>
+        <md-button @click="proceedWithEdit" class="md-primary">Save</md-button>
+        <md-button @click="resetEdit">Cancel</md-button>
       </div>
     </modal>
 
-    <md-snackbar md-position="center" md-duration="2000" :md-active.sync="showSnackbar" md-persistent>
+    <md-snackbar md-position="center" :md-duration="+2000" :md-active.sync="showSnackbar" md-persistent>
       <span>Product price must be a number.</span>
       <md-button class="md-accent" @click="showSnackbar = false">OK</md-button>
     </md-snackbar>
@@ -126,9 +126,34 @@ export default Vue.extend({
       }
     },
 
+    openEditModal(id: number) {
+      this.editProductID = id.toString();
+      this.editProductName = this.products[id-1].name;
+      this.editProductPrice = this.products[id-1].price.toString();
+      this.$modal.show('edit-product');
+    },
+
     editProduct(id: number, newName: string, newPrice: number) {
       this.products[id-1].name = newName;
       this.products[id-1].price = newPrice;
+    },
+
+    resetEdit() {
+      this.editProductID = '';
+      this.editProductName = '';
+      this.editProductPrice = '';
+      this.$modal.hide('edit-product');
+      this.showSnackbar = false;
+    },
+
+    proceedWithEdit(id: number) {
+      if (isNaN(+this.editProductPrice)) {
+        this.showSnackbar = true;
+      }
+      else {
+        this.editProduct(parseInt(this.editProductID), this.editProductName, parseInt(this.editProductPrice));
+        this.resetEdit();
+      }
     },
 
     deleteProduct(id: number) {
