@@ -4,7 +4,7 @@
             <md-card-header>
                 <div class="md-title">
                     Stats
-                    <md-button class="md-icon-button md-dense md-raised">
+                    <md-button class="md-icon-button md-dense md-raised" @click="loadStats">
                         <md-icon>cached</md-icon>
                     </md-button>
                 </div>
@@ -19,7 +19,7 @@
             <md-card-header>
                 <div class="md-title">
                     Prices
-                    <md-button class="md-icon-button md-dense md-raised">
+                    <md-button class="md-icon-button md-dense md-raised" @click="loadPrices">
                         <md-icon>cached</md-icon>
                     </md-button>
                 </div>
@@ -47,7 +47,14 @@ export default Vue.extend({
             totalProducts: 0,
             avgProductPrice: 0,
             totalProductsValue: 0,
-            avgNameLength: 0
+            avgNameLength: 0,
+
+            priceCategories: {
+                first: 0,
+                second: 0,
+                third: 0,
+                fourth: 0
+            }
         }
     },
 
@@ -74,7 +81,22 @@ export default Vue.extend({
         },
 
         loadPrices() {
-            
+            let to10 = 0;
+            let to100 = 0;
+            let to1000 = 0;
+            let to10000 = 0;
+            this.content.forEach(product => {
+                const value = product.price;
+                if (value < 11) to10 ++;
+                else if (value < 101) to100 ++;
+                else if (value < 1001) to1000 ++;
+                else to10000 ++;
+            });
+
+            this.priceCategories.first = to10;
+            this.priceCategories.second = to100;
+            this.priceCategories.third = to1000;
+            this.priceCategories.fourth = to10000;
         }
     }
 
