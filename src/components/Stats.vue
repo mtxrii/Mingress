@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="container">
     <md-card>
       <md-card-header>
         <div class="md-title">Stats</div>
@@ -37,9 +37,8 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .md-card {
-  width: 320px;
-  margin: 4px;
-  display: inline-block;
-  vertical-align: top;
+  width: calc(50% - 32px);
+  margin-top: 4px;
+  float: left;
 }
 </style>
