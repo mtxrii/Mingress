@@ -39,13 +39,31 @@
           <md-input v-model="newProductPrice"></md-input>
         </md-field>
         <md-button @click="proceedWithAdd" class="md-primary">Save</md-button>
-        <md-button @click="cancelAdd">Cancel</md-button>
+        <md-button @click="resetAdd">Cancel</md-button>
       </div>
     </modal>
 
-    <md-snackbar md-position="center" md-duration="2000" :md-active.sync="showSnackbar1" md-persistent>
+    <modal name="add-product">
+      <div style="padding: 40px">
+        <div class="md-title">Add Product</div>
+        <md-field>
+          <md-icon>label</md-icon>
+          <label>Name</label>
+          <md-input v-model="newProductName"></md-input>
+        </md-field>
+        <md-field>
+          <md-icon>local_atm</md-icon>
+          <label>Price</label>
+          <md-input v-model="newProductPrice"></md-input>
+        </md-field>
+        <md-button @click="proceedWithAdd" class="md-primary">Save</md-button>
+        <md-button @click="resetAdd">Cancel</md-button>
+      </div>
+    </modal>
+
+    <md-snackbar md-position="center" md-duration="2000" :md-active.sync="showSnackbar" md-persistent>
       <span>Product price must be a number.</span>
-      <md-button class="md-accent" @click="showSnackbar1 = false">OK</md-button>
+      <md-button class="md-accent" @click="showSnackbar = false">OK</md-button>
     </md-snackbar>
 
   </div>
@@ -73,7 +91,11 @@ export default Vue.extend({
       newProductName: '',
       newProductPrice: '',
 
-      showSnackbar1: false
+      editProductID: '',
+      editProductName: '',
+      editProductPrice: '',
+
+      showSnackbar: false
     }
   },
 
@@ -87,30 +109,31 @@ export default Vue.extend({
       });
     },
 
-    cancelAdd() {
+    resetAdd() {
       this.newProductName = '';
       this.newProductPrice = '';
       this.$modal.hide('add-product');
-      this.showSnackbar1 = false;
+      this.showSnackbar = false;
     },
 
     proceedWithAdd() {
       if (isNaN(+this.newProductPrice)) {
-        this.showSnackbar1 = true;
+        this.showSnackbar = true;
       }
       else {
         this.addProduct(this.newProductName, parseInt(this.newProductPrice));
-        this.cancelAdd();
+        this.resetAdd();
       }
+    },
+
+    editProduct(id: number, newName: string, newPrice: number) {
+      this.products[id-1].name = newName;
+      this.products[id-1].price = newPrice;
     },
 
     deleteProduct(id: number) {
       this.products.splice(id-1, 1);
       this.reIndex();
-    },
-
-    editProduct(id: number) {
-      // for ()
     },
 
     reIndex() {
