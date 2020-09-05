@@ -5,10 +5,14 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
+import Donut from 'vue-css-donut-chart';
+import 'vue-css-donut-chart/dist/vcdonut.css';
+
 import VModal from 'vue-js-modal'
 
 Vue.use(VueMaterial)
 Vue.use(VModal)
+Vue.use(Donut)
 
 import {keys} from './keys'
 

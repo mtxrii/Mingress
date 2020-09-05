@@ -36,7 +36,8 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "typings/vue-material/index.d.ts"
+    "typings/vue-material/index.d.ts",
+    "typings/vue-css-donut-chart/index.d.ts"
   ],
   "exclude": [
     "node_modules"
