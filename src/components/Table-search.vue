@@ -34,6 +34,7 @@
 <script>
 import Vue from 'vue';
 
+// eslint-disable-next-line
 const searchByName = (items, term) => {
   if (term) {
     return items.filter(item => item.name.toString().toLowerCase().includes(term.toString().toLowerCase()));

@@ -1,15 +1,19 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
-import Donut from 'vue-css-donut-chart';
-import 'vue-css-donut-chart/dist/vcdonut.css';
+import Donut from 'vue-css-donut-chart'
+import 'vue-css-donut-chart/dist/vcdonut.css'
 
 import VModal from 'vue-js-modal'
 
+Vue.use(VueAxios, axios)
 Vue.use(VueMaterial)
 Vue.use(Donut)
 Vue.use(VModal)
