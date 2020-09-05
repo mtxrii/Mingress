@@ -12,18 +12,28 @@
         </md-toolbar>
 
         <md-list>
-          <md-button :md-ripple="false"><md-icon>home</md-icon>Main Dash</md-button>
-          <md-button :md-ripple="false"><md-icon>view_list</md-icon>All Products</md-button>
-          <md-button :md-ripple="false"><md-icon>search</md-icon>Search</md-button>
+          <md-button :md-ripple="false" @click="currentPage = 0"><md-icon>home</md-icon>Main Dash</md-button>
+          <md-button :md-ripple="false" @click="currentPage = 1"><md-icon>view_list</md-icon>All Products</md-button>
+          <md-button :md-ripple="false" @click="currentPage = 2"><md-icon>search</md-icon>Search</md-button>
         </md-list>
       </md-app-drawer>
 
       <md-app-content>
-        <Table v-bind:content="products"
+        <Table v-if="currentPage == 0"
+          v-bind:content="products"
+          v-bind:deleteButton="deleteProduct" 
+          v-bind:editButton="openEditModal"/>
+        <TableFull v-if="currentPage == 1"
+          v-bind:content="products"
+          v-bind:deleteButton="deleteProduct" 
+          v-bind:editButton="openEditModal"/>
+        <TableSearch v-if="currentPage == 2"
+          v-bind:content="products"
           v-bind:deleteButton="deleteProduct" 
           v-bind:editButton="openEditModal"/>
         <br>
-        <Stats v-bind:content="products"/>
+        <Stats v-if="currentPage == 0"
+          v-bind:content="products"/>
       </md-app-content>
     </md-app>
 
@@ -74,6 +84,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import Table from './components/Table.vue';
+import TableFull from './components/Table-full.vue';
+import TableSearch from './components/Table-search.vue';
 import Stats from './components/Stats.vue';
 
 export default Vue.extend({
@@ -81,6 +93,8 @@ export default Vue.extend({
 
   components: {
     Table,
+    TableFull,
+    TableSearch,
     Stats
   },
 
@@ -99,7 +113,8 @@ export default Vue.extend({
       editProductName: '',
       editProductPrice: '',
 
-      showSnackbar: false
+      showSnackbar: false,
+      currentPage: 0
     }
   },
 

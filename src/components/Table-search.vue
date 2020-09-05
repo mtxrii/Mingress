@@ -1,6 +1,6 @@
 <template>
   <div>
-    <md-table v-model="content" md-sort="id" md-sort-order="asc" md-card md-fixed-header>
+    <md-table v-model="searched" md-sort="id" md-sort-order="asc" md-card md-fixed-header>
       <md-table-toolbar>
         <h1 class="md-title">Products</h1>
         <md-field md-clearable class="md-toolbar-section-end">
@@ -36,13 +36,13 @@ import Vue from 'vue';
 
 const searchByName = (items, term) => {
   if (term) {
-    return items.filter(item => item.name.toLowerCase().includes(term.toLowerCase()));
+    return items.filter(item => item.name.toString().toLowerCase().includes(term.toString().toLowerCase()));
   }
   return items;
 }
 
 export default Vue.extend({
-  name: 'Table-search',
+  name: 'TableSearch',
 
   props: {
     content: Array,
@@ -53,18 +53,18 @@ export default Vue.extend({
 
   data: function() {
     return {
-      search: null,
+      search: '',
       searched: []
     }
   },
 
   methods: {
     searchOnTable() {
-      this.searched = searchByName(this.content, this.search);
+      this.searched = this.content.filter(item => item.name.toString().toLowerCase().includes(this.search.toLowerCase()));
     }
   },
 
-  mounted() {
+  beforeMount() {
     this.searched = this.content;
   }
 
