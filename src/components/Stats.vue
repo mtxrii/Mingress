@@ -11,7 +11,15 @@
             </md-card-header>
 
             <md-card-content>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.
+                <span class="md-subheading">
+                    <md-icon>category</md-icon> Total Products: ....................... <strong>{{totalProducts}}</strong>
+                    <div style="margin-top: 10px"></div>
+                    <md-icon>local_offer</md-icon> Average Product price: ......... <strong>${{avgProductPrice}}</strong>
+                    <div style="margin-top: 10px"></div>
+                    <md-icon>account_balance</md-icon> Total Listed Asset Value: ..... <strong>${{totalProductsValue}}</strong>
+                    <div style="margin-top: 10px"></div>
+                    <md-icon>text_rotation_none</md-icon> Average Name Length: ........... <strong>{{avgNameLength}}</strong>
+                </span>
             </md-card-content>
         </md-card>
         
@@ -75,9 +83,9 @@ export default Vue.extend({
             });
 
             this.totalProducts = ammount;
-            this.avgProductPrice = totalPrice / ammount;
+            this.avgProductPrice = Math.round(totalPrice / ammount);
             this.totalProductsValue = totalPrice;
-            this.avgNameLength = totalNameLength / ammount;
+            this.avgNameLength = Math.round(totalNameLength / ammount);
         },
 
         loadPrices() {
