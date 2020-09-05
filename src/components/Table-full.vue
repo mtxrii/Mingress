@@ -1,6 +1,6 @@
 <template>
   <div>
-    <md-table v-model="content" md-sort="id" md-sort-order="asc" md-card md-fixed-header>
+    <md-table v-model="content" md-sort="id" md-sort-order="asc" md-card>
       <md-table-toolbar>
         <h1 class="md-title">Products</h1>
         <md-button class="md-icon-button md-primary md-raised" @click="$modal.show('add-product')">
@@ -29,7 +29,7 @@
 import Vue from 'vue';
 
 export default Vue.extend({
-  name: 'Table',
+  name: 'Table-full',
 
   props: {
     content: Array,
