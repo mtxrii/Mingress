@@ -26,7 +26,7 @@
         <md-card>
             <md-card-header>
                 <div class="md-title">
-                    Prices
+                    Price Ranges
                     <md-button class="md-icon-button md-dense md-raised" @click="loadPrices">
                         <md-icon>cached</md-icon>
                     </md-button>
@@ -34,7 +34,11 @@
             </md-card-header>
 
             <md-card-content>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.
+                <vc-donut :sections="priceCategories"
+                    :size="130" 
+                    has-legend 
+                    legend-placement="left">
+                </vc-donut>
             </md-card-content>
         </md-card>
     </div>
@@ -57,12 +61,12 @@ export default Vue.extend({
             totalProductsValue: 0,
             avgNameLength: 0,
 
-            priceCategories: {
-                first: 0,
-                second: 0,
-                third: 0,
-                fourth: 0
-            }
+            priceCategories: [
+                { value: 0, label: '$0 - $10', color: '#ff5252' },
+                { value: 0, label: '$11 - $100', color: '#448aff' },
+                { value: 0, label: '$101 - $1,000', color: '#ffb744' },
+                { value: 0, label: '$1,001 - $10,000', color: '#54c72e' }
+            ]
         }
     },
 
@@ -100,11 +104,12 @@ export default Vue.extend({
                 else if (value < 1001) to1000 ++;
                 else to10000 ++;
             });
+            const total = to10 + to100 + to1000 + to10000;
 
-            this.priceCategories.first = to10;
-            this.priceCategories.second = to100;
-            this.priceCategories.third = to1000;
-            this.priceCategories.fourth = to10000;
+            this.priceCategories[0].value = (to10 / total) * 100;
+            this.priceCategories[1].value = (to100 / total) * 100;
+            this.priceCategories[2].value = (to1000 / total) * 100;
+            this.priceCategories[3].value = (to10000 / total) * 100;
         }
     }
 

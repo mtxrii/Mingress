@@ -11,8 +11,8 @@ import 'vue-css-donut-chart/dist/vcdonut.css';
 import VModal from 'vue-js-modal'
 
 Vue.use(VueMaterial)
-Vue.use(VModal)
 Vue.use(Donut)
+Vue.use(VModal)
 
 import {keys} from './keys'
 
