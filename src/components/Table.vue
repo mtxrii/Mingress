@@ -8,6 +8,10 @@
         </md-button>
       </md-table-toolbar>
 
+      <md-table-empty-state md-label="Loading...">
+        <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+      </md-table-empty-state>
+
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="ID" md-sort-by="id">{{ item.id }}</md-table-cell>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
