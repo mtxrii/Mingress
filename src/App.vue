@@ -145,6 +145,9 @@ export default Vue.extend({
         name: newName,
         price: newPrice
       });
+
+      this.loadStats();
+      this.loadPrices();
     },
 
     resetAdd() {
@@ -174,6 +177,9 @@ export default Vue.extend({
     editProduct(id: number, newName: string, newPrice: number) {
       this.products[id-1].name = newName;
       this.products[id-1].price = newPrice;
+
+      this.loadStats();
+      this.loadPrices();
     },
 
     resetEdit() {
@@ -197,6 +203,9 @@ export default Vue.extend({
     deleteProduct(id: number) {
       this.products.splice(id-1, 1);
       this.reIndex();
+      
+      this.loadStats();
+      this.loadPrices();
     },
 
     reIndex() {
@@ -256,6 +265,14 @@ export default Vue.extend({
         this.products = response.data;
         this.loadStats();
         this.loadPrices();
+      })
+      .catch(error => {
+        alert("The product API could not be reached right now.");
+        this.products = [
+          {id: 1, name: "Example product 1", price: 10},
+          {id: 2, name: "Example product 2", price: 50},
+          {id: 3, name: "Example product 3", price: 100},
+        ]
       });
   }
 
