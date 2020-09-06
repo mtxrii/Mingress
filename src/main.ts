@@ -18,10 +18,12 @@ Vue.use(VueMaterial)
 Vue.use(Donut)
 Vue.use(VModal)
 
-import {keys} from './keys'
-
-Vue.prototype.$keyVars = keys;
 Vue.config.productionTip = false;
+
+export const URLs = {
+  app: 'https://ingress-backend.herokuapp.com/',
+  proxy: 'https://cors-anywhere.herokuapp.com/'
+}
 
 new Vue({
   render: h => h(App),

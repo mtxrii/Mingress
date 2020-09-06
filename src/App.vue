@@ -33,7 +33,9 @@
           v-bind:editButton="openEditModal"/>
         <br>
         <Stats v-if="currentPage == 0"
-          v-bind:content="products"/>
+          v-bind:content="products"
+          v-bind:productStats="productStats"
+          v-bind:priceCategories="priceCategories"/>
       </md-app-content>
     </md-app>
 
@@ -82,11 +84,14 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Table from './components/Table.vue';
-import TableFull from './components/Table-full.vue';
-import TableSearch from './components/Table-search.vue';
-import Stats from './components/Stats.vue';
+import Vue from 'vue'
+import Table from './components/Table.vue'
+import TableFull from './components/Table-full.vue'
+import TableSearch from './components/Table-search.vue'
+import Stats from './components/Stats.vue'
+
+import {keys} from '../src/keys'
+import {URLs} from '../src/main'
 
 export default Vue.extend({
   name: 'App',
@@ -101,9 +106,7 @@ export default Vue.extend({
   data: function() {
     return {
       products: [
-        {id: 1, name: "thing1", price: 10},
-        {id: 2, name: "object2", price: 50},
-        {id: 3, name: "item3", price: 20},
+        {id: 1, name: "string", price: 10}
       ],
 
       newProductName: '',
@@ -112,6 +115,22 @@ export default Vue.extend({
       editProductID: '',
       editProductName: '',
       editProductPrice: '',
+
+      productStats: {
+        totalProducts: 0,
+        avgProductPrice: 0,
+        totalProductsValue: 0,
+        avgNameLength: 0,
+        totalExpensive: 0,
+      },
+
+      priceCategories: [
+        { value: 0, label: '$0 - $10', color: '#ff5252' },
+        { value: 0, label: '$11 - $100', color: '#448aff' },
+        { value: 0, label: '$101 - $1,000', color: '#ffb744' },
+        { value: 0, label: '$1,001 - $10,000', color: '#54c72e' },
+        { value: 0, label: '$10,000 +', color: '#6b2ec7' }
+      ],
 
       showSnackbar: false,
       currentPage: 0
@@ -184,7 +203,60 @@ export default Vue.extend({
       for (let i = 1; i <= this.products.length; i++) {
         this.products[i-1].id = i;
       }
+    },
+    
+    loadStats() {
+      const ammount = this.products.length;
+
+      let totalPrice = 0;
+      let totalNameLength = 0;
+      let above10k = 0;
+      this.products.forEach(product => {
+        totalPrice += product.price;
+        totalNameLength += product.name.length
+        if (product.price > 10000) above10k ++;
+      });
+
+      this.productStats.totalProducts = ammount;
+      this.productStats.avgProductPrice = Math.round(totalPrice / ammount);
+      this.productStats.totalProductsValue = totalPrice;
+      this.productStats.avgNameLength = Math.round(totalNameLength / ammount);
+      this.productStats.totalExpensive = above10k;
+    },
+
+    loadPrices() {
+      let to10 = 0;
+      let to100 = 0;
+      let to1000 = 0;
+      let to10000 = 0;
+      let over10k = 0;
+      this.products.forEach(product => {
+        const value = product.price;
+        if (value < 11) to10 ++;
+        else if (value < 101) to100 ++;
+        else if (value < 1001) to1000 ++;
+        else if (value < 10001) to10000 ++;
+        else over10k ++;
+      });
+      const total = to10 + to100 + to1000 + to10000 + over10k;
+
+      this.priceCategories[0].value = (to10 / total) * 100;
+      this.priceCategories[1].value = (to100 / total) * 100;
+      this.priceCategories[2].value = (to1000 / total) * 100;
+      this.priceCategories[3].value = (to10000 / total) * 100;
+      this.priceCategories[4].value = (over10k / total) * 100;
     }
+  },
+
+  beforeMount() {
+    this.products.length = 0;
+    Vue.axios
+      .get(URLs.proxy + URLs.app + 'products/' + keys.backend)
+      .then(response => {
+        this.products = response.data;
+        this.loadStats();
+        this.loadPrices();
+      });
   }
 
 });
