@@ -15,7 +15,7 @@
       </md-table-empty-state>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="ID" md-sort-by="id">{{ item.id }}</md-table-cell>
+        <md-table-cell md-label="ID" md-sort-by="index">{{ item.index }}</md-table-cell>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Price" md-sort-by="price">${{ item.price }}</md-table-cell>
         <md-table-cell>

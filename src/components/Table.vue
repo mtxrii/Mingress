@@ -13,14 +13,14 @@
       </md-table-empty-state>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="ID" md-sort-by="id">{{ item.id }}</md-table-cell>
+        <md-table-cell md-label="ID" md-sort-by="index">{{ item.index }}</md-table-cell>
         <md-table-cell md-label="Name" md-sort-by="name">{{ item.name }}</md-table-cell>
         <md-table-cell md-label="Price" md-sort-by="price">${{ item.price }}</md-table-cell>
         <md-table-cell>
-          <md-button class="md-icon-button md-accent md-raised" @click="deleteButton(item.id)">
+          <md-button class="md-icon-button md-accent md-raised" @click="deleteButton(item.id, item.index)">
             <md-icon>delete</md-icon>
           </md-button>
-          <md-button class="md-icon-button md-primary md-raised" @click="editButton(item.id)">
+          <md-button class="md-icon-button md-primary md-raised" @click="editButton(item.id, item.index)">
             <md-icon>create</md-icon>
           </md-button>
         </md-table-cell>

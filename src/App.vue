@@ -107,13 +107,14 @@ export default Vue.extend({
   data: function() {
     return {
       products: [
-        {id: 1, name: "string", price: 10}
+        {id: 1, name: "string", price: 10, index: 1}
       ],
 
       newProductName: '',
       newProductPrice: '',
 
       editProductID: '',
+      editProductIndex: '',
       editProductName: '',
       editProductPrice: '',
 
@@ -152,7 +153,8 @@ export default Vue.extend({
           this.products.push({
             id: newID,
             name: newName,
-            price: newPrice
+            price: newPrice,
+            index: newID
           });
 
           this.loadStats();
@@ -181,22 +183,23 @@ export default Vue.extend({
       }
     },
 
-    openEditModal(id: number) {
+    openEditModal(id: number, index: number) {
       this.editProductID = id.toString();
-      this.editProductName = this.products[id-1].name;
-      this.editProductPrice = this.products[id-1].price.toString();
+      this.editProductIndex = index.toString();
+      this.editProductName = this.products[index-1].name;
+      this.editProductPrice = this.products[index-1].price.toString();
       this.$modal.show('edit-product');
     },
 
-    editProduct(id: number, newName: string, newPrice: number) { //http put
+    editProduct(id: number, newName: string, newPrice: number, index: number) { //http put
     Vue.axios
       .put(URLs.proxy + URLs.app + 'product/' + id + '/' + keys.backend, {
         name: newName,
         price: newPrice
       })
       .then(() => {
-        this.products[id-1].name = newName;
-        this.products[id-1].price = newPrice;
+        this.products[index-1].name = newName;
+        this.products[index-1].price = newPrice;
 
         this.loadStats();
         this.loadPrices();
@@ -220,16 +223,16 @@ export default Vue.extend({
         this.showSnackbar = true;
       }
       else {
-        this.editProduct(parseInt(this.editProductID), this.editProductName, parseInt(this.editProductPrice));
+        this.editProduct(parseInt(this.editProductID), this.editProductName, parseInt(this.editProductPrice), parseInt(this.editProductIndex));
         this.resetEdit();
       }
     },
 
-    deleteProduct(id: number) { //http delete
+    deleteProduct(id: number, index: number) { //http delete
       Vue.axios
         .delete(URLs.proxy + URLs.app + 'product/' + id + '/' + keys.backend)
         .then(() => {
-          this.products.splice(id-1, 1);
+          this.products.splice(index-1, 1);
           this.reIndex();
 
           this.loadStats();
@@ -243,7 +246,7 @@ export default Vue.extend({
 
     reIndex() {
       for (let i = 1; i <= this.products.length; i++) {
-        this.products[i-1].id = i;
+        this.products[i-1].index = i;
       }
     },
     
@@ -299,15 +302,16 @@ export default Vue.extend({
         this.loadStats();
         this.loadPrices();
 
+        this.reIndex();
         this.componentKey += 1;
       })
       .catch(error => {
         alert("The product API could not be reached right now.");
         console.log(error);
         this.products = [
-          {id: 1, name: "Example product 1", price: 10},
-          {id: 2, name: "Example product 2", price: 50},
-          {id: 3, name: "Example product 3", price: 100},
+          {id: 1, name: "Example product 1", price: 10, index: 1},
+          {id: 2, name: "Example product 2", price: 40, index: 2},
+          {id: 3, name: "Example product 3", price: 90, index: 3},
         ];
       });
   }
