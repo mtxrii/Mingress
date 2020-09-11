@@ -226,11 +226,19 @@ export default Vue.extend({
     },
 
     deleteProduct(id: number) { //http delete
-      this.products.splice(id-1, 1);
-      this.reIndex();
-      
-      this.loadStats();
-      this.loadPrices();
+      Vue.axios
+        .delete(URLs.proxy + URLs.app + 'product/' + id + '/' + keys.backend)
+        .then(() => {
+          this.products.splice(id-1, 1);
+          this.reIndex();
+
+          this.loadStats();
+          this.loadPrices();
+        })
+        .catch(error => {
+          alert("The product API could not be reached right now.");
+          console.log(error);
+        });
     },
 
     reIndex() {
