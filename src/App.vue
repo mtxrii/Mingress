@@ -138,16 +138,30 @@ export default Vue.extend({
   },
 
   methods: {
-    addProduct(newName: string, newPrice: number) {
+    addProduct(newName: string, newPrice: number) { //http
       const newID = this.products.length + 1;
-      this.products.push({
-        id: newID,
-        name: newName,
-        price: newPrice
-      });
+      
+      Vue.axios
+        .post(URLs.proxy + URLs.app + 'product/' + keys.backend, {
+          name: newName,
+          price: newPrice
+        })
+        .then(() => {
+          this.products.push({
+            id: newID,
+            name: newName,
+            price: newPrice
+          });
 
-      this.loadStats();
-      this.loadPrices();
+          this.loadStats();
+          this.loadPrices();
+        })
+        .catch(error => {
+          alert("The product API could not be reached right now.");
+          console.log(error);
+        });
+
+      
     },
 
     resetAdd() {
@@ -174,7 +188,7 @@ export default Vue.extend({
       this.$modal.show('edit-product');
     },
 
-    editProduct(id: number, newName: string, newPrice: number) {
+    editProduct(id: number, newName: string, newPrice: number) { //http
       this.products[id-1].name = newName;
       this.products[id-1].price = newPrice;
 
@@ -200,7 +214,7 @@ export default Vue.extend({
       }
     },
 
-    deleteProduct(id: number) {
+    deleteProduct(id: number) { //http
       this.products.splice(id-1, 1);
       this.reIndex();
       
@@ -257,7 +271,7 @@ export default Vue.extend({
     }
   },
 
-  beforeMount() {
+  beforeMount() { //http
     this.products.length = 0;
     Vue.axios
       .get(URLs.proxy + URLs.app + 'products/' + keys.backend)
@@ -268,11 +282,12 @@ export default Vue.extend({
       })
       .catch(error => {
         alert("The product API could not be reached right now.");
+        console.log(error);
         this.products = [
           {id: 1, name: "Example product 1", price: 10},
           {id: 2, name: "Example product 2", price: 50},
           {id: 3, name: "Example product 3", price: 100},
-        ]
+        ];
       });
   }
 
