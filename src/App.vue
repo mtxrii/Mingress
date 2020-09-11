@@ -22,7 +22,8 @@
         <Table v-if="currentPage == 0"
           v-bind:content="products"
           v-bind:deleteButton="deleteProduct" 
-          v-bind:editButton="openEditModal"/>
+          v-bind:editButton="openEditModal"
+          :key="componentKey"/>
         <TableFull v-if="currentPage == 1"
           v-bind:content="products"
           v-bind:deleteButton="deleteProduct" 
@@ -133,7 +134,8 @@ export default Vue.extend({
       ],
 
       showSnackbar: false,
-      currentPage: 0
+      currentPage: 0,
+      componentKey: 0
     }
   },
 
@@ -188,7 +190,7 @@ export default Vue.extend({
 
     editProduct(id: number, newName: string, newPrice: number) { //http put
     Vue.axios
-      .put(URLs.proxy + URLs.app + 'product/' + (id-1) + '/' + keys.backend, {
+      .put(URLs.proxy + URLs.app + 'product/' + id + '/' + keys.backend, {
         name: newName,
         price: newPrice
       })
@@ -288,6 +290,8 @@ export default Vue.extend({
         this.products = response.data;
         this.loadStats();
         this.loadPrices();
+
+        this.componentKey += 1;
       })
       .catch(error => {
         alert("The product API could not be reached right now.");
