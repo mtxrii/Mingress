@@ -138,7 +138,7 @@ export default Vue.extend({
   },
 
   methods: {
-    addProduct(newName: string, newPrice: number) { //http
+    addProduct(newName: string, newPrice: number) { //http post
       const newID = this.products.length + 1;
       
       Vue.axios
@@ -160,8 +160,6 @@ export default Vue.extend({
           alert("The product API could not be reached right now.");
           console.log(error);
         });
-
-      
     },
 
     resetAdd() {
@@ -188,12 +186,23 @@ export default Vue.extend({
       this.$modal.show('edit-product');
     },
 
-    editProduct(id: number, newName: string, newPrice: number) { //http
-      this.products[id-1].name = newName;
-      this.products[id-1].price = newPrice;
+    editProduct(id: number, newName: string, newPrice: number) { //http put
+    Vue.axios
+      .put(URLs.proxy + URLs.app + 'product/' + (id-1) + '/' + keys.backend, {
+        name: newName,
+        price: newPrice
+      })
+      .then(() => {
+        this.products[id-1].name = newName;
+        this.products[id-1].price = newPrice;
 
-      this.loadStats();
-      this.loadPrices();
+        this.loadStats();
+        this.loadPrices();
+      })
+      .catch(error => {
+        alert("The product API could not be reached right now.");
+        console.log(error);
+      });
     },
 
     resetEdit() {
@@ -214,7 +223,7 @@ export default Vue.extend({
       }
     },
 
-    deleteProduct(id: number) { //http
+    deleteProduct(id: number) { //http delete
       this.products.splice(id-1, 1);
       this.reIndex();
       
@@ -271,7 +280,7 @@ export default Vue.extend({
     }
   },
 
-  beforeMount() { //http
+  beforeMount() { //http get
     this.products.length = 0;
     Vue.axios
       .get(URLs.proxy + URLs.app + 'products/' + keys.backend)
