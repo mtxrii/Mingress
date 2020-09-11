@@ -23,20 +23,24 @@
           v-bind:content="products"
           v-bind:deleteButton="deleteProduct" 
           v-bind:editButton="openEditModal"
+          v-bind:empty="isEmpty"
           :key="componentKey"/>
         <TableFull v-if="currentPage == 1"
           v-bind:content="products"
           v-bind:deleteButton="deleteProduct" 
-          v-bind:editButton="openEditModal"/>
+          v-bind:editButton="openEditModal"
+          v-bind:empty="isEmpty"/>
         <TableSearch v-if="currentPage == 2"
           v-bind:content="products"
           v-bind:deleteButton="deleteProduct" 
-          v-bind:editButton="openEditModal"/>
+          v-bind:editButton="openEditModal"
+          v-bind:empty="isEmpty"/>
         <br>
         <Stats v-if="currentPage == 0"
           v-bind:content="products"
           v-bind:productStats="productStats"
-          v-bind:priceCategories="priceCategories"/>
+          v-bind:priceCategories="priceCategories"
+          v-bind:empty="isEmpty"/>
       </md-app-content>
     </md-app>
 
@@ -109,6 +113,7 @@ export default Vue.extend({
       products: [
         {id: 1, name: "string", price: 10, index: 1}
       ],
+      isEmpty: false,
 
       newProductName: '',
       newProductPrice: '',
@@ -159,6 +164,8 @@ export default Vue.extend({
 
           this.loadStats();
           this.loadPrices();
+
+          this.isEmpty = false;
         })
         .catch(error => {
           alert("The product API could not be reached right now.");
@@ -245,8 +252,13 @@ export default Vue.extend({
     },
 
     reIndex() {
+      this.isEmpty = false;
       for (let i = 1; i <= this.products.length; i++) {
         this.products[i-1].index = i;
+      }
+
+      if (this.products.length == 0) {
+        this.isEmpty = true;
       }
     },
     

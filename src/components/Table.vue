@@ -8,8 +8,16 @@
         </md-button>
       </md-table-toolbar>
 
-      <md-table-empty-state md-label="Loading...">
+      <md-table-empty-state v-if="!empty" md-label="Loading...">
         <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+      </md-table-empty-state>
+
+      <md-table-empty-state
+        v-else
+        md-icon="devices_other"
+        md-label="No products yet"
+        md-description="This table will auto populate with products as they're added.">
+        <md-button class="md-primary md-raised" @click="$modal.show('add-product')">new product</md-button>
       </md-table-empty-state>
 
       <md-table-row slot="md-table-row" slot-scope="{ item }">
@@ -37,6 +45,7 @@ export default Vue.extend({
 
   props: {
     content: Array,
+    empty: Boolean,
     
     deleteButton: Function,
     editButton: Function

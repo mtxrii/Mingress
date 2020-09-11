@@ -7,7 +7,7 @@
                 </div>
             </md-card-header>
 
-            <md-card-content>
+            <md-card-content v-if="!empty">
                 <div style="padding: 4px"></div>
                 <span class="md-subheading">
                     <md-icon>category</md-icon> Total Products: ....................... <strong>{{productStats.totalProducts}}</strong>
@@ -22,6 +22,14 @@
                 </span>
                 <div style="padding: 4px"></div>
             </md-card-content>
+
+            <md-card-content v-else>
+                <md-empty-state
+                    md-size="170"
+                    md-rounded
+                    md-description="Nothing to show. Add products to analyze">
+                </md-empty-state>
+            </md-card-content>
         </md-card>
         
         <md-card>
@@ -32,7 +40,17 @@
             </md-card-header>
 
             <md-card-content>
-                <vc-donut :sections="priceCategories"
+                <vc-donut
+                    v-if="!empty"
+                    :sections="priceCategories"
+                    :size="170" 
+                    has-legend 
+                    legend-placement="left">
+                </vc-donut>
+
+                <vc-donut
+                    v-else
+                    :sections="example"
                     :size="170" 
                     has-legend 
                     legend-placement="left">
@@ -50,9 +68,22 @@ export default Vue.extend({
 
     props: {
         content: Array,
+        empty: Boolean,
 
         productStats: Object,
         priceCategories: Array
+    },
+
+    data: function() {
+        return {
+            example: [
+                { value: 0, label: '$0 - $10', color: '#ff5252' },
+                { value: 0, label: '$11 - $100', color: '#448aff' },
+                { value: 0, label: '$101 - $1,000', color: '#ffb744' },
+                { value: 0, label: '$1,001 - $10,000', color: '#54c72e' },
+                { value: 0, label: '$10,000 +', color: '#6b2ec7' }
+            ]
+        }
     }
 
 });
