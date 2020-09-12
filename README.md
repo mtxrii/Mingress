@@ -7,6 +7,9 @@ A simple product management dashboard web app.
   <img src="screenshots/search.PNG" width="30%">
 </div>
 
+## Purpose
+This web app was originally created to test out a backend with Go, but now serves as a fun public record of random hypothetical products that anyone can access and modify. Check it out at [mingress.edavalos.com](https://mingress.edavalos.com/)
+
 ## The Stack
 This repository only contains the frontend, but the full application also stores and manages data. The backend source code can be found under the sister repository [Ingress](https://github.com/mtxrii/Ingress).
 
