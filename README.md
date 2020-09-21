@@ -1,5 +1,5 @@
 # Mingress
-A simple product management dashboard web app.
+A simple product management and viewing dashboard web app.
 
 <div style="text-align: center">
   <img src="screenshots/main.PNG" width="30%">
