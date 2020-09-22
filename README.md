@@ -1,10 +1,10 @@
 # Mingress
-A simple product management and viewing dashboard web app.
+A simple product viewing and management dashboard web app.
 
 <div style="text-align: center">
-  <img src="screenshots/main.PNG" width="30%">
-  <img src="screenshots/all.PNG" width="30%">
-  <img src="screenshots/search.PNG" width="30%">
+  <img src="screenshots/main.PNG" width="33%">
+  <img src="screenshots/all.PNG" width="33%">
+  <img src="screenshots/search.PNG" width="33%">
 </div>
 
 ## Purpose
